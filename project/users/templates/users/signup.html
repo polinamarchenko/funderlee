@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-6 col-lg-offset-3 title">
+    <p><strong>Register using your e-mail address:</strong></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6 col-lg-offset-3">
+    <form action="{{ url_for('users.signup') }}" method="post">
+      {{ form.csrf_token }}
+      {% if form.username.errors %}
+        {% for error in form.username.errors %}
+          <span class="text-danger">
+            {{ error }}
+          </span>
+        {% endfor %}
+      {% endif %}
+      {{ form.username(placeholder="Select your Username *", class="form-control") }}
+      {% if form.fullname.errors %}
+        {% for error in form.fullname.errors %}
+          <span class="text-danger">
+            {{ error }}
+          </span>
+        {% endfor %}
+      {% endif %}
+      {{ form.fullname(placeholder="First and Last Name *", class="form-control") }}
+      {% if form.email.errors %}
+        {% for error in form.email.errors %}
+          <span class="text-danger">
+            {{ error }}
+          </span>
+        {% endfor %}
+      {% endif %}
+      {{ form.email(placeholder="E-mail Address *", class="form-control") }}
+      {% if form.password.errors %}
+        {% for error in form.password.errors %}
+          <span class="text-danger">
+            {{ error }}
+          </span>
+        {% endfor %}
+      {% endif %}
+      {{ form.password(placeholder="Password *", class="form-control") }}
+      <button type="submit" class="btn btn-success">Create a new account</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+.header-img {
+  background-image: url('/static/images/funderlee_hero.jpg');
+  height: 400px;
+  opacity: 0.8;
+}
+
+#funderlee_logo {
+  height: 50px;
+}
+
+.container-fluid {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+a.navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 15px;
+}
+
+a:link, a:visited {
+  color: #E4001B;
+}
+
+a:hover, a:active {
+  color: #701112;
+  text-decoration: none;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.country {
+  font-size: 12px;
+}
+
+.title {
+  padding-top: 10px;
+  text-align: center;
+}
