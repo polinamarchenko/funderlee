@@ -1,0 +1,58 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-3 col-lg-offset-2">
+    <ul class="nav nav-pills nav-stacked">
+      <li role="presentation"><a class="active" href="#">General</a></li>
+      <li role="presentation"><a href="#">Password</a></li>
+      <li role="presentation"><a href="#">Collections</a></li>
+    </ul>
+  </div>
+
+  <div class="col-lg-5">
+    <h3>Settings/General</h3>
+    <form action="{{url_for('users.show', id=current_user.id)}}?_method=PATCH" method="post">
+      {{ form.csrf_token }}
+      <p>
+        {{form.username.label}}
+        {{form.username(class="form-control")}}
+        <span>
+          {% if form.username.errors %}
+            {% for error in form.username.errors %}
+              {{ error }}
+            {% endfor %}
+          {% endif %}
+        </span>
+      </p>
+      <p>
+        {{form.email.label}}
+        {{form.email(class="form-control")}}
+        <span>
+          {% if form.email.errors %}
+            {% for error in form.email.errors %}
+              {{ error }}
+            {% endfor %}
+          {% endif %}
+        </span>
+      </p>
+      <p>
+        {{form.password.label}}
+        {{form.password(class="form-control")}}
+        <span>
+          {% if form.password.errors %}
+            {% for error in form.password.errors %}
+              {{ error }}
+            {% endfor %}
+          {% endif %}
+        </span>
+      </p>
+      <button type="submit" class="btn btn-info">Save changes</button>
+    </form>
+    <p></p>
+    <form action="index.html" method="post">
+      <input type="submit" value="Delete account" class="btn btn-danger">
+    </form>
+  </div>
+</div>
+{% endblock %}

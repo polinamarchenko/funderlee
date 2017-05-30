@@ -18,6 +18,29 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}">
   </head>
   <body>
+
+    {% for message in get_flashed_messages() %}
+      <div class="flash-message alert alert-{{ message['status'] }}">{{ message['text'] }}</div>
+    {% endfor %}
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="{{ url_for('root') }}" class="navbar-brand">
+            <img id="funderlee_logo" src="{{ url_for('static', filename='images/funderlee_logo.png') }}" alt="">
+          </a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          {% if current_user.is_anonymous %}
+            <li><a href="{{ url_for('users.signup') }}">Sign up</a></li>
+            <li><a href="{{ url_for('users.login') }}">Log in</a></li>
+          {% else %}
+            <li><a href="{{ url_for('users.show', id=current_user.id) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
+            <li><a href="{{ url_for('users.logout') }}">Log out</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
     {% block content %}
     {% endblock %}
   </body>

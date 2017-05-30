@@ -7,9 +7,10 @@
 </div>
 <div class="row">
   <div class="col-lg-4 col-lg-offset-4 title">
-    <p><strong>Register using your e-mail address:</strong></p>
+    <p><strong>Login</strong></p>
   </div>
 </div>
+
 <div class="row">
   <div class="col-lg-4 col-lg-offset-4">
     <form action="{{ url_for('users.signup') }}" method="post">
@@ -23,18 +24,7 @@
       {% endif %}
       <p>
         {{form.username.label}}
-        {{ form.username(placeholder="Select your Username *", class="form-control") }}
-      </p>
-      {% if form.email.errors %}
-        {% for error in form.email.errors %}
-          <span class="text-danger">
-            {{ error }}
-          </span>
-        {% endfor %}
-      {% endif %}
-      <p>
-        {{form.email.label}}
-        {{ form.email(placeholder="E-mail Address *", class="form-control") }}
+        {{ form.username(placeholder="Username", class="form-control") }}
       </p>
       {% if form.password.errors %}
         {% for error in form.password.errors %}
@@ -45,9 +35,9 @@
       {% endif %}
       <p>
         {{form.password.label}}
-        {{ form.password(placeholder="Password *", class="form-control") }}
+        {{ form.password(placeholder="Password", class="form-control") }}
       </p>
-      <button type="submit" class="btn btn-success">Create a new account</button>
+      <button type="submit" class="btn btn-success">Login</button>
     </form>
   </div>
 </div>

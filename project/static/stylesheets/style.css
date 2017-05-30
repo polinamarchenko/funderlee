@@ -40,3 +40,79 @@ a:hover, a:active {
   padding-top: 10px;
   text-align: center;
 }
+
+.form-control {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.flash-message {
+  text-align: center;
+  font-weight: bold;
+}
+
+.lock-icon {
+  color: #545750;
+}
+
+.menu-lock-icon {
+  color: white;
+  font-size: 10px;
+}
+
+.background-menu {
+  background-color: #545750;
+}
+.markets-menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+
+}
+
+li.market {
+  float: left;
+}
+
+li.market a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li.market a:hover:not(.active) {
+  background-color: #708787;
+}
+
+a.active:link, a.active:visited, a.active:hover {
+  background-color: #E4001B;
+  color: white;
+}
+
+a.add-item:link, a.add-item:visited {
+  color: #195F6C;
+  padding: 10px;
+  border: solid #195f6C 1px;
+  border-radius: 4px;
+}
+
+a.add-item:hover, a.add-item:active {
+  color: white;
+  border: solid #195f6C 1px;
+  background-color: #195F6C;
+}
+
+.collections {
+  list-style-type: none;
+}
+li.collection {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.right {
+  float:right;
+}

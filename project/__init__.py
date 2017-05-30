@@ -7,6 +7,7 @@ import os
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
+login_manager = LoginManager(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI') or 'postgres://localhost/funderlee'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -16,8 +17,6 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 modus = Modus(app)
 bcrypt = Bcrypt(app)
-login_manager = LoginManager(app)
-
 
 from project.startups.views import startups_blueprint
 from project.investors.views import investors_blueprint
@@ -31,6 +30,10 @@ app.register_blueprint(startups_blueprint, url_prefix='/startups')
 app.register_blueprint(investors_blueprint, url_prefix='/investors')
 app.register_blueprint(users_blueprint, url_prefix='/users')
 
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+    
 @app.route('/')
 def root():
     investors = Investor.query.all()
