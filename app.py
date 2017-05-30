@@ -1,9 +1,9 @@
 from project import app
 
 if os.environ.get('ENV') == 'production':
-    debug = False
+    app.config.from_object('config.ProductionConfig')
 else:
-    debug = True
+    app.config.from_object('config.DevelopmentConfig')
 
 if __name__ == '__main__':
-  app.run(debug=debug, port=3000)
+  app.run()
