@@ -3,22 +3,23 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_modus import Modus
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, current_user, login_user, login_required
+import config
 import os
 
 app = Flask(__name__)
-db = SQLAlchemy(app)
-login_manager = LoginManager(app)
 
 if os.environ.get('ENV') == 'production':
-    app.config.from_object('config.ProductionConfig')
+    app.config.from_object(config.ProductionConfig())
 else:
-    app.config.from_object('config.DevelopmentConfig')
-
+    app.config.from_object(config.DevelopmentConfig())
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+
+db = SQLAlchemy(app)
+login_manager = LoginManager(app)
 
 modus = Modus(app)
 bcrypt = Bcrypt(app)
