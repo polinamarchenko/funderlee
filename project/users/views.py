@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, url_for, Blueprint, flash
 from project.users.models import User
-from project.users.forms import UserForm, LoginForm, EditForm
+from project.users.forms import UserForm, LoginForm, EditForm, PasswordForm
 from project import db, bcrypt
 from sqlalchemy.exc import IntegrityError
 from flask_login import login_user, logout_user, current_user, login_required
@@ -80,3 +80,18 @@ def show(id):
             return redirect(url_for('root'))
         return render_template('users/show.html', user=found_user, form=form)
     return render_template('users/show.html', user=found_user, form=form)
+
+@users_blueprint.route('/<int:id>/password')
+def password(id):
+    user = User.query.get(id)
+    form = PasswordForm(request.form)
+    if form.validate():
+        if bcrypt.check_password_hash(user.password, form.current.data):
+            user.new_password = bcrypt.generate_password_hash(form.new_password.data).decode('UTF-8')
+            db.session.add(user)
+            db.session.commit()
+            flash('You have succesfully changed your password')
+            return redirect(url_for('root'))
+        flash('Please provide the right password')
+        return render_template('users/password.html', form=form, user=user)
+    return render_template('users/password.html', form=form, user=user)

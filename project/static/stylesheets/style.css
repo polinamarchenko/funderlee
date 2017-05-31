@@ -1,7 +1,35 @@
 .header-img {
   background-image: url('/static/images/funderlee_hero.jpg');
   height: 400px;
-  opacity: 0.8;
+  opacity: 0.7;
+  position: relative;
+  margin-top: -20px;
+}
+body {
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
+}
+
+h1 {
+  font-size: 65px;
+}
+
+.faster-h1 {
+  font-family: 'Montserrat Subrayada', sans-serif;
+  font-style: oblique;
+  font-size: 55px;
+  color: #E4001B;
+}
+
+.hero-text-box {
+  position: absolute;
+  width: 50%;
+  top: 25%;
+  left: 25%;
+  color: white;
+  background-color: rgba(112, 135, 135, 0.7);
+  padding: 2%;
+  text-align: center
 }
 
 #funderlee_logo {
@@ -87,7 +115,7 @@ li.market a:hover:not(.active) {
   background-color: #708787;
 }
 
-a.active:link, a.active:visited, a.active:hover {
+li.market a.active:link, li.market a.active:visited, li.market a.active:hover {
   background-color: #E4001B;
   color: white;
 }
@@ -97,6 +125,7 @@ a.add-item:link, a.add-item:visited {
   padding: 10px;
   border: solid #195f6C 1px;
   border-radius: 4px;
+  font-size: 16px;
 }
 
 a.add-item:hover, a.add-item:active {
@@ -115,4 +144,17 @@ li.collection {
 
 .right {
   float:right;
+}
+
+.navbar-default {
+  background-color: #d5e2e2;
+}
+
+li.settings a:hover:not(.active) {
+  background-color: #d5e2e2;
+}
+
+li.settings a.active:link, li.settings a.active:visited, li.settings a.active:hover {
+  background-color: #E4001B;
+  color: white;
 }

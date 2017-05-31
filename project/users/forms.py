@@ -15,3 +15,8 @@ class EditForm(FlaskForm):
     username = StringField('username', validators=[DataRequired()])
     email = StringField('email', validators=[DataRequired(), Email()])
     password = PasswordField('password', validators=[DataRequired()])
+
+class PasswordForm(FlaskForm):
+    current = PasswordField('Current Password', validators=[DataRequired()])
+    new_password = PasswordField('New Password', validators=[Length(min=6)])
+    confirm = PasswordField('Confirm Password', validators=[DataRequired()])
