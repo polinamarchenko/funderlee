@@ -65,33 +65,41 @@ def logout():
   return redirect(url_for('users.login'))
 
 @users_blueprint.route('/<int:id>', methods=['GET', 'PATCH'])
+@login_required
+@ensure_correct_user
 def show(id):
     found_user = User.query.get(id)
-    form = EditForm(obj=found_user)
-    if request.method == b'PATCH':
-        form = EditForm(request.form)
-        if form.validate():
-            found_user.username = form.username.data
-            found_user.email = form.email.data
-            is_authenticated = bcrypt.check_password_hash(found_user.password, form.password.data)
-            if is_authenticated:
-                db.session.add(found_user)
-                db.session.commit()
-            return redirect(url_for('root'))
+    if request.method == 'GET':
+        form = EditForm(obj=found_user)
         return render_template('users/show.html', user=found_user, form=form)
-    return render_template('users/show.html', user=found_user, form=form)
+
+    if request.method == b'PATCH':
+        if request.form.get('username', None) is not None:
+            form = EditForm(request.form)
+            if form.validate():
+                found_user.username = form.username.data
+                found_user.email = form.email.data
+                is_authenticated = bcrypt.check_password_hash(found_user.password, form.password.data)
+                if is_authenticated:
+                    db.session.add(found_user)
+                    db.session.commit()
+                    return redirect(url_for('root'))
+            return render_template('users/show.html', user=found_user, form=form)
+        else:
+            form2 = PasswordForm(request.form)
+            if form2.validate():
+                if bcrypt.check_password_hash(found_user.password,form2.current.data):
+                    found_user.new_password = bcrypt.generate_password_hash(form2.new_password.data).decode('UTF-8')
+                    db.session.add(found_user)
+                    db.session.commit()
+                    flash('You have succesfully changed your password')
+                    return redirect(url_for('root'))
+                flash('Please provide the right password')
+                return render_template('users/password.html', form=form2, user=found_user)
+            return render_template('users/password.html', form=form2, user=found_user)
 
 @users_blueprint.route('/<int:id>/password')
 def password(id):
     user = User.query.get(id)
     form = PasswordForm(request.form)
-    if form.validate():
-        if bcrypt.check_password_hash(user.password, form.current.data):
-            user.new_password = bcrypt.generate_password_hash(form.new_password.data).decode('UTF-8')
-            db.session.add(user)
-            db.session.commit()
-            flash('You have succesfully changed your password')
-            return redirect(url_for('root'))
-        flash('Please provide the right password')
-        return render_template('users/password.html', form=form, user=user)
     return render_template('users/password.html', form=form, user=user)

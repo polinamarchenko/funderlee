@@ -36,6 +36,7 @@
           <li class="list-group-item">
             <p class="name">{{startup.name}}</p>
             <p><span class="glyphicon glyphicon-link" aria-hidden="true"></span> <a href="{{startup.url}}">{{startup.url}}</a></p>
+            <p>{{startup.market}}</p>
           </li>
         {% endfor %}
       </ul>
@@ -49,8 +50,8 @@
             <p class="name">{{investor.name}}</p>
             <p class="country"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> {{investor.country}}</p>
             <p><span class="glyphicon glyphicon-link" aria-hidden="true"></span> <a href="{{investor.url}}">{{investor.url}}</a></p>
-            <p>Markets: <a href="{{ url_for('users.signup') }}"></a> </p>
-            <p>Investments: <a href="{{ url_for('users.signup') }}"></a></p>
+            <p>Markets {{investor.get_market_names()}}</p>
+            <!-- SELECT investors.id AS investors_id, markets.name AS markets_name FROM investors, markets, investors_markets WHERE investors.id = investors_markets.investor_id AND markets.id = investors_markets.market_id; -->
           </li>
         {% endfor %}
       </ul>
@@ -92,6 +93,7 @@
           <li class="list-group-item">
             <p class="name">{{startup.name}}</p>
             <p><span class="glyphicon glyphicon-link" aria-hidden="true"></span> <a href="{{startup.url}}">{{startup.url}}</a></p>
+            <p>Markets: <a href="{{ url_for('users.signup') }}"><span class="lock-icon glyphicon glyphicon-lock"></span></a></p>
           </li>
         {% endfor %}
       </ul>
