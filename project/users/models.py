@@ -9,6 +9,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.Text, unique=True)
     email = db.Column(db.Text)
     password = db.Column(db.Text)
+    collections = db.relationship('Collection', backref='user')
 
     def __init__(self, username, email, password):
         self.username = username

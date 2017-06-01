@@ -1,0 +1,19 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-2 col-lg-offset-3">
+    <ul class="nav nav-pills nav-stacked">
+      <li class="settings" role="presentation"><a href="{{url_for('users.show', id=current_user.id)}}">General</a></li>
+      <li class="settings" role="presentation"><a href="{{url_for('users.password', id=current_user.id)}}">Password</a></li>
+      <li class="settings" role="presentation"><a class="active" href="{{url_for('users.collection', id=current_user.id)}}">Collection</a></li>
+    </ul>
+  </div>
+
+  <div class="col-lg-4">
+    <h3>Collection</h3>
+    
+
+  </div>
+</div>
+{% endblock %}

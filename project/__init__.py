@@ -31,10 +31,13 @@ from project.startups.models import Startup
 from project.investors.models import Investor
 from project.users.models import User
 from project.startups.models import StartupsInvestors
+from project.collections.models import Collection, CollectionInvestor
 
 app.register_blueprint(startups_blueprint, url_prefix='/startups')
 app.register_blueprint(investors_blueprint, url_prefix='/investors')
 app.register_blueprint(users_blueprint, url_prefix='/users')
+# app.register_blueprint(collections_blueprint, url_prefix='/collections')
+
 
 @login_manager.user_loader
 def load_user(id):

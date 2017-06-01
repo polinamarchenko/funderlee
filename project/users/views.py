@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request, url_for, Blueprint, flash
 from project.users.models import User
 from project.users.forms import UserForm, LoginForm, EditForm, PasswordForm
+from project.collections.forms import CollectionForm
 from project import db, bcrypt
 from sqlalchemy.exc import IntegrityError
 from flask_login import login_user, logout_user, current_user, login_required
@@ -103,3 +104,14 @@ def password(id):
     user = User.query.get(id)
     form = PasswordForm(request.form)
     return render_template('users/password.html', form=form, user=user)
+
+@users_blueprint.route('/<int:id>/collection')
+def collection(id):
+    user = User.query.get(id)
+    return render_template('users/collection.html', user=user)
+
+@users_blueprint.route('/<int:id>/new')
+def new(id):
+    user = User.query.get(id)
+    form = CollectionForm(request.form)
+    return render_template('users/new.html', user=user, form=form)

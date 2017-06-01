@@ -1,0 +1,47 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div class="row">
+  <div class="header-img">
+    <div class="hero-text-box">
+      <h1>FIND LIKE-MINDED INVESTORS <span class="faster-h1"><em>faster</em></span></h1>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-4 col-lg-offset-4 title">
+    <p><strong>Login</strong></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-4 col-lg-offset-4">
+    <form action="{{ url_for('users.login') }}" method="post">
+      {{ form.csrf_token }}
+      {% if form.username.errors %}
+        {% for error in form.username.errors %}
+          <span class="text-danger">
+            {{ error }}
+          </span>
+        {% endfor %}
+      {% endif %}
+      <p>
+        {{form.username.label}}
+        {{ form.username(placeholder="Username", class="form-control") }}
+      </p>
+      {% if form.password.errors %}
+        {% for error in form.password.errors %}
+          <span class="text-danger">
+            {{ error }}
+          </span>
+        {% endfor %}
+      {% endif %}
+      <p>
+        {{form.password.label}}
+        {{ form.password(placeholder="Password", class="form-control") }}
+      </p>
+      <button type="submit" class="btn btn-success">Login</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

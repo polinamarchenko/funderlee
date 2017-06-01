@@ -11,18 +11,14 @@
 
 {% if current_user.is_authenticated %}
   <div class="row background-menu">
-    <div class="col-lg-12">
+    <div class="col-lg-8 col-lg-offset-2">
       <ul class="markets-menu">
         <li class="market"><a class="active" href="#all">All markets</a></li>
         <li class="market"><a href="{{ url_for('users.signup') }}">Foodtech</a></li>
-        <li class="market"><a href="{{ url_for('users.signup') }}">Robotics</a></li>
         <li class="market"><a href="{{ url_for('users.signup') }}">AI</a></li>
-        <li class="market"><a href="{{ url_for('users.signup') }}">Mobility</a></li>
-        <li class="market"><a href="{{ url_for('users.signup') }}">Healthtech</a></li>
         <li class="market"><a href="{{ url_for('users.signup') }}">Fashiontech</a></li>
-        <li class="market"><a href="{{ url_for('users.signup') }}">Fintech</a></li>
-        <li class="market"><a href="{{ url_for('users.signup') }}">Femtech</a></li>
-        <li class="market"><a href="{{ url_for('users.signup') }}">Adtech</a></li>
+        <li class="market"><a href="{{ url_for('users.signup') }}">Biotech</a></li>
+        <li class="market"><a href="{{ url_for('users.signup') }}">Fitness</a></li>
         <li class="market"><a href="{{ url_for('users.signup') }}">Agtech</a></li>
       </ul>
     </div>
@@ -47,11 +43,13 @@
       <ul class="list-group">
         {% for investor in investors %}
           <li class="list-group-item">
-            <p class="name">{{investor.name}}</p>
-            <p class="country"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> {{investor.country}}</p>
-            <p><span class="glyphicon glyphicon-link" aria-hidden="true"></span> <a href="{{investor.url}}">{{investor.url}}</a></p>
-            <p>Markets {{investor.get_market_names()}}</p>
-            <!-- SELECT investors.id AS investors_id, markets.name AS markets_name FROM investors, markets, investors_markets WHERE investors.id = investors_markets.investor_id AND markets.id = investors_markets.market_id; -->
+            <form class="investor" action="index.html" method="post">
+              <p class="name">{{investor.name}}</p>
+              <p class="country"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> {{investor.country}}</p>
+              <p><span class="glyphicon glyphicon-link" aria-hidden="true"></span> <a href="{{investor.url}}">{{investor.url}}</a></p>
+              <p class="markets"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Markets: {{investor.get_market_names()}}</p>
+              <button type="submit" class="btn btn-success">Save</button>
+            </form>
           </li>
         {% endfor %}
       </ul>
@@ -62,24 +60,20 @@
       <ul class="list-group collections">
         <li class="list-group-item collection">Contact next week <a href="#"><span class="glyphicon glyphicon-remove right" aria-hidden="true"></span></a></li>
       </ul>
-      <a class="add-item" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create a new collection</a>
+      <a class="add-item" href="{{url_for('users.new')}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create a new collection</a>
     </div>
 
   </div>
   {% else %}
   <div class="row background-menu">
-    <div class="col-lg-12">
+    <div class="col-lg-8 col-lg-offset-2">
       <ul class="markets-menu">
         <li class="market"><a class="active" href="#all">All markets</a></li>
         <li class="market"><a href="{{ url_for('users.signup') }}">Foodtech <span class="menu-lock-icon glyphicon glyphicon-lock"></span></a></li>
-        <li class="market"><a href="{{ url_for('users.signup') }}">Robotics <span class="menu-lock-icon glyphicon glyphicon-lock"></span></a></li>
         <li class="market"><a href="{{ url_for('users.signup') }}">AI <span class="menu-lock-icon glyphicon glyphicon-lock"></span></a></li>
-        <li class="market"><a href="{{ url_for('users.signup') }}">Mobility <span class="menu-lock-icon glyphicon glyphicon-lock"></span></a></li>
-        <li class="market"><a href="{{ url_for('users.signup') }}">Healthtech <span class="menu-lock-icon glyphicon glyphicon-lock"></span></a></li>
         <li class="market"><a href="{{ url_for('users.signup') }}">Fashiontech <span class="menu-lock-icon glyphicon glyphicon-lock"></span></a></li>
-        <li class="market"><a href="{{ url_for('users.signup') }}">Fintech <span class="menu-lock-icon glyphicon glyphicon-lock"></span></a></li>
-        <li class="market"><a href="{{ url_for('users.signup') }}">Femtech <span class="menu-lock-icon glyphicon glyphicon-lock"></span></a></li>
-        <li class="market"><a href="{{ url_for('users.signup') }}">Adtech <span class="menu-lock-icon glyphicon glyphicon-lock"></span></a></li>
+        <li class="market"><a href="{{ url_for('users.signup') }}">Biotech <span class="menu-lock-icon glyphicon glyphicon-lock"></span></a></li>
+        <li class="market"><a href="{{ url_for('users.signup') }}">Fitness <span class="menu-lock-icon glyphicon glyphicon-lock"></span></a></li>
         <li class="market"><a href="{{ url_for('users.signup') }}">Agtech <span class="menu-lock-icon glyphicon glyphicon-lock"></span></a></li>
       </ul>
     </div>

@@ -126,7 +126,7 @@ a.add-item:link, a.add-item:visited {
   padding: 10px;
   border: solid #195f6C 1px;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 a.add-item:hover, a.add-item:active {
@@ -141,6 +141,7 @@ a.add-item:hover, a.add-item:active {
 li.collection {
   padding-top: 15px;
   padding-bottom: 15px;
+  font-size: 15px;
 }
 
 .right {
@@ -158,4 +159,18 @@ li.settings a:hover:not(.active) {
 li.settings a.active:link, li.settings a.active:visited, li.settings a.active:hover {
   background-color: #E4001B;
   color: white;
+}
+
+p.markets {
+  font-size: 14px;
+  color: #819b9b;
+}
+
+.btn {
+  margin-bottom: 10px;
+}
+
+.password-form, .general-form {
+  border: solid 1px #d5e2e2;
+  border-radius: 4px;
 }
