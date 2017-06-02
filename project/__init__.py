@@ -1,8 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, redirect, render_template, request, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_modus import Modus
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, current_user, login_user, login_required
+from project.collections.forms import CollectionForm
 import config
 import os
 
@@ -43,8 +44,18 @@ app.register_blueprint(users_blueprint, url_prefix='/users')
 def load_user(id):
     return User.query.get(int(id))
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def root():
     investors = Investor.query.all()
     startups = Startup.query.all()
+    if request.method == 'POST':
+        form = CollectionForm(request.form)
+        if form.validate():
+            collection = Collection(name=form.name.data, user_id=current_user.id)
+            db.session.add(collection)
+            db.session.commit()
+            flash('You have create a new collection')
+            return render_template('home.html', investors=investors, startups=startups)
+        flash('Collection name cannot be empty')
+        return redirect('url_for(users.new)', form=form)
     return render_template('home.html', investors=investors, startups=startups)

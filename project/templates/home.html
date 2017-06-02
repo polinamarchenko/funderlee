@@ -58,9 +58,13 @@
     <div class="col-lg-2">
       <p class="title">COLLECTIONS</p>
       <ul class="list-group collections">
-        <li class="list-group-item collection">Contact next week <a href="#"><span class="glyphicon glyphicon-remove right" aria-hidden="true"></span></a></li>
+        <li class="list-group-item collection">
+          {% for collection in current_user.collections %}
+            <p class="collection-home-side">{{collection.name}} <a href="#"><span class="glyphicon glyphicon-remove right" aria-hidden="true"></span></a></p>
+          {% endfor %}
+          </li>
       </ul>
-      <a class="add-item" href="{{url_for('users.new')}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create a new collection</a>
+      <a class="add-item" href="{{url_for('users.new', id=current_user.id)}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create a new collection</a>
     </div>
 
   </div>

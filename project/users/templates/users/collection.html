@@ -12,8 +12,13 @@
 
   <div class="col-lg-4">
     <h3>Collection</h3>
-    
-
+      <ul class="list-group collections">
+        <li class="list-group-item collection">
+          {% for collection in current_user.collections %}
+            <p class="collection-home-side">{{collection.name}} <a href="#"><span class="glyphicon glyphicon-remove right" aria-hidden="true"></span></a></p>
+          {% endfor %}
+          </li>
+      </ul>
   </div>
 </div>
 {% endblock %}
