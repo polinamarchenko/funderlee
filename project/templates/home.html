@@ -43,12 +43,16 @@
       <ul class="list-group">
         {% for investor in investors %}
           <li class="list-group-item">
-            <form class="investor" action="index.html" method="post">
+            <form class="investor" action="{{url_for('root')}}" method="post">
               <p class="name">{{investor.name}}</p>
               <p class="country"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> {{investor.country}}</p>
-              <p><span class="glyphicon glyphicon-link" aria-hidden="true"></span> <a href="{{investor.url}}">{{investor.url}}</a></p>
+              <p><span class="glyphicon glyphicon-link" aria-hidden="true"></span> <a href="{{investor.url}}">Angellist</a></p>
               <p class="markets"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Markets: {{investor.get_market_names()}}</p>
-              <button type="submit" class="btn btn-success">Save</button>
+              {% if investor in users_investors %}
+                <button type="submit" class="btn btn-danger">Remove</button>
+              {% else %}
+                <button type="submit" class="btn btn-success">Save</button>
+              {% endif %}
             </form>
           </li>
         {% endfor %}
@@ -104,7 +108,7 @@
           <li class="list-group-item">
             <p class="name">{{investor.name}}</p>
             <p class="country"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> {{investor.country}}</p>
-            <p><span class="glyphicon glyphicon-link" aria-hidden="true"></span> <a href="{{investor.url}}">{{investor.url}}</a></p>
+            <p><span class="glyphicon glyphicon-link" aria-hidden="true"></span> <a href="{{investor.url}}">Angel list</a></p>
             <p>Markets: <a href="{{ url_for('users.signup') }}"><span class="lock-icon glyphicon glyphicon-lock"></span></a> </p>
             <p>Investments: <a href="{{ url_for('users.signup') }}"><span class="lock-icon glyphicon glyphicon-lock"></span></a></p>
           </li>

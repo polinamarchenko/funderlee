@@ -8,14 +8,10 @@
     </div>
   </div>
 </div>
+<p></p>
 <div class="row">
-  <div class="col-lg-4 col-lg-offset-4 title">
-    <p><strong>Login</strong></p>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-4 col-lg-offset-4">
+  <div class="col-lg-4 col-lg-offset-4 forms">
+    <p class="title"><strong>Login</strong></p>
     <form action="{{ url_for('users.login') }}" method="post">
       {{ form.csrf_token }}
       {% if form.username.errors %}

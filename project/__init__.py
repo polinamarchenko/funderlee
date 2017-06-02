@@ -4,6 +4,7 @@ from flask_modus import Modus
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, current_user, login_user, login_required
 from project.collections.forms import CollectionForm
+from project.investors.forms import InvestorForm
 import config
 import os
 
@@ -31,6 +32,7 @@ from project.users.views import users_blueprint
 from project.startups.models import Startup
 from project.investors.models import Investor
 from project.users.models import User
+from project.users.models import UsersInvestors
 from project.startups.models import StartupsInvestors
 from project.collections.models import Collection, CollectionInvestor
 
@@ -49,13 +51,21 @@ def root():
     investors = Investor.query.all()
     startups = Startup.query.all()
     if request.method == 'POST':
-        form = CollectionForm(request.form)
-        if form.validate():
-            collection = Collection(name=form.name.data, user_id=current_user.id)
-            db.session.add(collection)
+        if request.form.get('country', None) is None:
+            form = InvestorForm(request.form)
+            found_investor = Investor.query.filter_by(name=form.name.data).first()
+            saved_investor = UsersInvestors(user_id = current_user.id, investor_id = found_investor.id)
+            db.session.add(saved_investor)
             db.session.commit()
-            flash('You have create a new collection')
-            return render_template('home.html', investors=investors, startups=startups)
-        flash('Collection name cannot be empty')
-        return redirect('url_for(users.new)', form=form)
+            return render_template('home.html', investors=investors, startups=startups, form=form)
+        else:
+            form2 = CollectionForm(request.form)
+            if form2.validate():
+                collection = Collection(name=form2.name.data, user_id=current_user.id)
+                db.session.add(collection)
+                db.session.commit()
+                flash('You have create a new collection')
+                return render_template('home.html', investors=investors, startups=startups, form=form2)
+            flash('Collection name cannot be empty')
+            return render_template('users/new.html', form=form2)
     return render_template('home.html', investors=investors, startups=startups)

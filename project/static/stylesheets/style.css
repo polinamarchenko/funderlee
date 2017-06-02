@@ -10,6 +10,7 @@
 body {
   font-family: 'Lato', sans-serif;
   font-size: 18px;
+  background-color: #e3eded;
 }
 
 h1 {
@@ -167,19 +168,45 @@ li.settings a.active:link, li.settings a.active:visited, li.settings a.active:ho
 }
 
 p.markets {
-  font-size: 14px;
-  color: #819b9b;
+  font-size: 15px;
+  color: #5c7777;
 }
 
 .btn {
   margin-bottom: 10px;
+  font-size: 15px;
+
 }
 
-.password-form, .general-form {
-  border: solid 1px #d5e2e2;
+.password-form, .general-form, .forms {
+  border: solid 1px #293d3d;
   border-radius: 4px;
 }
 
 p.collection-home-side {
   margin-bottom: 0;
+}
+
+footer {
+  background-color: #195F6C;
+  color: white;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+p.footer {
+  text-align: center;
+  margin: 0;
+  font-size: 15px;
+}
+
+p.social-links {
+  text-align: center;
+  margin: 0;
+  font-size: 20px;
+}
+
+p.social-links a {
+  padding: 10px;
+  color: white;
 }

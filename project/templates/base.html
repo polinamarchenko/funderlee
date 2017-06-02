@@ -16,6 +16,7 @@
       src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
       integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
       crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/ee7b7f5360.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
@@ -46,5 +47,17 @@
     </nav>
     {% block content %}
     {% endblock %}
+    <footer>
+      <div class="row">
+        <p class="social-links">
+          <a href="https://www.linkedin.com/in/pmarchenko/"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+          <a href="https://github.com/polinamarchenko"><i class="fa fa-github" aria-hidden="true"></i></a>
+          <a href="https://polinamarchenko.github.io/"><i class="fa fa-user-circle" aria-hidden="true"></i></a>
+        </p>
+      </div>
+      <div class="row">
+        <p class="footer">Copyright © 2017 by Polina Marchenko. All rights reserved.</p>
+      </div>
+    </footer>
   </body>
 </html>
