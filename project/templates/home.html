@@ -119,7 +119,7 @@
     <div class="col-lg-4">
       <p class="title">INVESTORS</p>
       <ul class="list-group">
-        {% for investor in investors %}
+        {% for investor in investors.items %}
           <li class="list-group-item">
             <p class="name">{{investor.name}}</p>
             <p class="country"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> {{investor.country}}</p>
