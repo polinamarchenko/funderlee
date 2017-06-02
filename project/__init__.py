@@ -41,31 +41,27 @@ app.register_blueprint(investors_blueprint, url_prefix='/investors')
 app.register_blueprint(users_blueprint, url_prefix='/users')
 # app.register_blueprint(collections_blueprint, url_prefix='/collections')
 
-
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
 
 @app.route('/', methods=['GET', 'POST'])
 def root():
-    investors = Investor.query.all()
-    startups = Startup.query.all()
+    per_page = 20
+    page = int(request.args.get("page", -1))
+    if page < 0:
+        page = 1
+    startups = Startup.query.order_by('name').paginate(page,per_page,error_out=False)
+    investors = Investor.query.order_by('name').paginate(page,per_page,error_out=False)
     if request.method == 'POST':
-        if request.form.get('country', None) is None:
-            form = InvestorForm(request.form)
-            found_investor = Investor.query.filter_by(name=form.name.data).first()
-            saved_investor = UsersInvestors(user_id = current_user.id, investor_id = found_investor.id)
-            db.session.add(saved_investor)
+        form = InvestorForm(request.form)
+        found_investor = Investor.query.filter_by(name=form.investor.data).first()
+        if not found_investor in current_user.investors:
+            current_user.investors.append(found_investor)
+            db.session.add(found_investor)
             db.session.commit()
-            return render_template('home.html', investors=investors, startups=startups, form=form)
         else:
-            form2 = CollectionForm(request.form)
-            if form2.validate():
-                collection = Collection(name=form2.name.data, user_id=current_user.id)
-                db.session.add(collection)
-                db.session.commit()
-                flash('You have create a new collection')
-                return render_template('home.html', investors=investors, startups=startups, form=form2)
-            flash('Collection name cannot be empty')
-            return render_template('users/new.html', form=form2)
-    return render_template('home.html', investors=investors, startups=startups)
+            current_user.investors.remove(found_investor)
+            db.session.commit()
+        return redirect(url_for("root", page=page))
+    return render_template('home.html', investors=investors, startups=startups, page=page)

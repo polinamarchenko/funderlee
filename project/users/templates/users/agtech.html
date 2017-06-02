@@ -25,10 +25,26 @@
   </div>
 
   <div class="row">
+    <div class="col-lg-4 col-lg-offset-4">
+      {% if investors.has_prev %}
+        <a href="{{ url_for('users.agt', page=investors.prev_num) }}">&lt;&lt; Previous</a>
+      {% else %}
+        &lt;&lt; Previous
+      {% endif %} |
+
+      {% if investors.has_next %}
+        <a href="{{ url_for('users.agt', page=investors.next_num) }}">Next &gt;&gt;</a>
+      {% else %}
+        Next &gt;&gt;
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-lg-4 col-lg-offset-1">
     <p class="title">STARTUPS</p>
       <ul class="list-group">
-        {% for startup in startups %}
+        {% for startup in startups.items %}
           <li class="list-group-item">
             <p class="name">{{startup.name}}</p>
             <p><span class="glyphicon glyphicon-link" aria-hidden="true"></span> <a href="{{startup.url}}">{{startup.url}}</a></p>
@@ -41,15 +57,20 @@
     <div class="col-lg-4">
       <p class="title">INVESTORS</p>
       <ul class="list-group">
-        {% for investor in investors %}
+        {% for investor in investors.items %}
           {% if 'agriculture' in investor.get_market_names() %}
           <li class="list-group-item">
-            <form class="investor" action="index.html" method="post">
               <p class="name">{{investor.name}}</p>
               <p class="country"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> {{investor.country}}</p>
               <p><span class="glyphicon glyphicon-link" aria-hidden="true"></span> <a href="{{investor.url}}">{{investor.url}}</a></p>
               <p class="markets"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Markets: {{investor.get_market_names()}}</p>
-              <button type="submit" class="btn btn-success">Save</button>
+              <form class="investor" action="{{ url_for('users.agtech') }}" method="post">
+                <input type="hidden" value="{{investor.name}}" name="investor">
+              {% if investor in current_user.investors %}
+                <button type="submit" class="btn btn-danger">Remove</button>
+              {% else %}
+                <button type="submit" class="btn btn-success">Save</button>
+              {% endif %}
             </form>
           </li>
           {% endif %}
@@ -58,15 +79,10 @@
     </div>
 
     <div class="col-lg-2">
-      <p class="title">COLLECTIONS</p>
-      <ul class="list-group collections">
-        <li class="list-group-item collection">
-          {% for collection in current_user.collections %}
-            <p class="collection-home-side">{{collection.name}} <a href="#"><span class="glyphicon glyphicon-remove right" aria-hidden="true"></span></a></p>
-          {% endfor %}
-          </li>
-      </ul>
-      <a class="add-item" href="{{url_for('users.new', id=current_user.id)}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create a new collection</a>
+      <p class="title">MY COLLECTION</p>
+      <div class="center-link">
+        <a class="add-item" href="{{url_for('users.collection', id=current_user.id)}}">See saved investors</a>
+      </div>
     </div>
 
   </div>
@@ -89,7 +105,7 @@
     <div class="col-lg-4 col-md-offset-2">
     <p class="title">STARTUPS</p>
       <ul class="list-group">
-        {% for startup in startups %}
+        {% for startup in startups.items %}
           <li class="list-group-item">
             <p class="name">{{startup.name}}</p>
             <p><span class="glyphicon glyphicon-link" aria-hidden="true"></span> <a href="{{startup.url}}">{{startup.url}}</a></p>
@@ -102,7 +118,7 @@
     <div class="col-lg-4">
       <p class="title">INVESTORS</p>
       <ul class="list-group">
-        {% for investor in investors %}
+        {% for investor in investors.items %}
           <li class="list-group-item">
             <p class="name">{{investor.name}}</p>
             <p class="country"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> {{investor.country}}</p>

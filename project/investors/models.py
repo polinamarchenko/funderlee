@@ -36,3 +36,8 @@ class Investor(db.Model):
 
     def get_market_names(self):
         return ", ".join([market.name for market in self.markets])
+
+    @classmethod
+    def get_investors_in_market(cls, market_name):
+        return db.session.query(Investor,InvestorsMarkets,Market).filter(Investor.id==InvestorsMarkets.c.investor_id).filter(InvestorsMarkets.c.market_id==Market.id).filter(Market.name==market_name)
+        #Investor.query.join

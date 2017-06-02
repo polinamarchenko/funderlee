@@ -4,6 +4,7 @@ from project.investors.models import Investor
 from project.startups.models import Startup
 from project.users.forms import UserForm, LoginForm, EditForm, PasswordForm
 from project.collections.forms import CollectionForm
+from project.investors.forms import InvestorForm
 from project import db, bcrypt
 from sqlalchemy.exc import IntegrityError
 from flask_login import login_user, logout_user, current_user, login_required
@@ -107,55 +108,197 @@ def password(id):
     form = PasswordForm(request.form)
     return render_template('users/password.html', form=form, user=user)
 
-@users_blueprint.route('/<int:id>/collection')
+@users_blueprint.route('/<int:id>/collection', methods=['GET', 'POST'])
 def collection(id):
     user = User.query.get(id)
+    if request.method == 'POST':
+        form = InvestorForm(request.form)
+        found_investor = Investor.query.filter_by(name=form.investor.data).first()
+        current_user.investors.remove(found_investor)
+        db.session.commit()
+        return render_template('users/collection.html', form=form)
     return render_template('users/collection.html', user=user)
 
-@users_blueprint.route('/<int:id>/new')
-def new(id):
-    user = User.query.get(id)
-    form = CollectionForm(request.form)
-    return render_template('users/new.html', user=user, form=form)
 
-@users_blueprint.route('/foodtech')
+@users_blueprint.route('/foodtech', methods=['GET', 'POST'])
 @login_required
 def foodtech():
     investors = Investor.query.all()
     startups = Startup.query.all()
+    if request.method == 'POST':
+        if request.form.get('investor', None) is not None:
+            form = InvestorForm(request.form)
+            found_investor = Investor.query.filter_by(name=form.investor.data).first()
+            if not found_investor in current_user.investors:
+                current_user.investors.append(found_investor)
+                db.session.add(found_investor)
+                db.session.commit()
+            else:
+                current_user.investors.remove(found_investor)
+                db.session.commit()
+            return render_template('users/foodtech.html', investors=investors, startups=startups, form=form)
+        else:
+            form2 = CollectionForm(request.form)
+            if form2.validate():
+                collection = Collection(name=form2.name.data, user_id=current_user.id)
+                db.session.add(collection)
+                db.session.commit()
+                flash('You have created a new collection')
+                return render_template('users/foodtech.html', investors=investors, startups=startups, form=form2)
+            flash('Collection name cannot be empty')
+            return render_template('users/new.html', form=form2)
     return render_template('users/foodtech.html', investors=investors, startups=startups)
 
-@users_blueprint.route('/ai')
+
+@users_blueprint.route('/ai', methods=['GET', 'POST'])
 @login_required
 def ai():
     investors = Investor.query.all()
     startups = Startup.query.all()
+    if request.method == 'POST':
+        if request.form.get('investor', None) is not None:
+            form = InvestorForm(request.form)
+            found_investor = Investor.query.filter_by(name=form.investor.data).first()
+            if not found_investor in current_user.investors:
+                current_user.investors.append(found_investor)
+                db.session.add(found_investor)
+                db.session.commit()
+            else:
+                current_user.investors.remove(found_investor)
+                db.session.commit()
+            return render_template('users/ai.html', investors=investors, startups=startups, form=form)
+        else:
+            form2 = CollectionForm(request.form)
+            if form2.validate():
+                collection = Collection(name=form2.name.data, user_id=current_user.id)
+                db.session.add(collection)
+                db.session.commit()
+                flash('You have created a new collection')
+                return render_template('users/ai.html', investors=investors, startups=startups, form=form2)
+            flash('Collection name cannot be empty')
+            return render_template('users/new.html', form=form2)
     return render_template('users/ai.html', investors=investors, startups=startups)
 
-@users_blueprint.route('/fashiontech')
+@users_blueprint.route('/fashiontech', methods=['GET', 'POST'])
 @login_required
 def fashion():
     investors = Investor.query.all()
     startups = Startup.query.all()
+    if request.method == 'POST':
+        if request.form.get('investor', None) is not None:
+            form = InvestorForm(request.form)
+            found_investor = Investor.query.filter_by(name=form.investor.data).first()
+            if not found_investor in current_user.investors:
+                current_user.investors.append(found_investor)
+                db.session.add(found_investor)
+                db.session.commit()
+            else:
+                current_user.investors.remove(found_investor)
+                db.session.commit()
+            return render_template('users/fashiontech.html', investors=investors, startups=startups, form=form)
+        else:
+            form2 = CollectionForm(request.form)
+            if form2.validate():
+                collection = Collection(name=form2.name.data, user_id=current_user.id)
+                db.session.add(collection)
+                db.session.commit()
+                flash('You have created a new collection')
+                return render_template('users/fashiontech.html', investors=investors, startups=startups, form=form2)
+            flash('Collection name cannot be empty')
+            return render_template('users/new.html', form=form2)
     return render_template('users/fashiontech.html', investors=investors, startups=startups)
 
-@users_blueprint.route('/biotech')
+@users_blueprint.route('/biotech', methods=['GET', 'POST'])
 @login_required
 def biotech():
     investors = Investor.query.all()
     startups = Startup.query.all()
+    if request.method == 'POST':
+        if request.form.get('investor', None) is not None:
+            form = InvestorForm(request.form)
+            found_investor = Investor.query.filter_by(name=form.investor.data).first()
+            if not found_investor in current_user.investors:
+                current_user.investors.append(found_investor)
+                db.session.add(found_investor)
+                db.session.commit()
+            else:
+                current_user.investors.remove(found_investor)
+                db.session.commit()
+            return render_template('users/biotech.html', investors=investors, startups=startups, form=form)
+        else:
+            form2 = CollectionForm(request.form)
+            if form2.validate():
+                collection = Collection(name=form2.name.data, user_id=current_user.id)
+                db.session.add(collection)
+                db.session.commit()
+                flash('You have created a new collection')
+                return render_template('users/biotech.html', investors=investors, startups=startups, form=form2)
+            flash('Collection name cannot be empty')
+            return render_template('users/new.html', form=form2)
     return render_template('users/biotech.html', investors=investors, startups=startups)
 
-@users_blueprint.route('/fitnesstech')
+@users_blueprint.route('/fitnesstech', methods=['GET', 'POST'])
 @login_required
 def fitnesstech():
-    investors = Investor.query.all()
+    per_page = 20
+    investors = Investor.query.order_by('name').paginate(1,per_page,error_out=False)
     startups = Startup.query.all()
+    if request.method == 'POST':
+        if request.form.get('investor', None) is not None:
+            form = InvestorForm(request.form)
+            found_investor = Investor.query.filter_by(name=form.investor.data).first()
+            if not found_investor in current_user.investors:
+                current_user.investors.append(found_investor)
+                db.session.add(found_investor)
+                db.session.commit()
+            else:
+                current_user.investors.remove(found_investor)
+                db.session.commit()
+            return render_template('users/fitnesstech.html', investors=investors, startups=startups, form=form)
+        else:
+            form2 = CollectionForm(request.form)
+            if form2.validate():
+                collection = Collection(name=form2.name.data, user_id=current_user.id)
+                db.session.add(collection)
+                db.session.commit()
+                flash('You have created a new collection')
+                return render_template('users/fitnesstech.html', investors=investors, startups=startups, form=form2)
+            flash('Collection name cannot be empty')
+            return render_template('users/new.html', form=form2)
     return render_template('users/fitnesstech.html', investors=investors, startups=startups)
 
-@users_blueprint.route('/agtech')
+@users_blueprint.route('/fitnesstech/<int:page>')
+def view(page=1):
+    per_page = 20
+    investors = Investor.query.order_by('name').paginate(page,per_page,error_out=False)
+    return render_template('users/fitnesstech.html',investors=investors)
+
+@users_blueprint.route('/agtech', methods=['GET', 'POST'])
 @login_required
 def agtech():
-    investors = Investor.query.all()
-    startups = Startup.query.all()
+    per_page = 50
+    page = int(request.args.get("page", -1))
+    if page < 0:
+        page = 1
+    investors = Investor.query.order_by('name').paginate(page,120,error_out=False)
+    startups = Startup.query.order_by('name').paginate(page,per_page,error_out=False)
+    if request.method == 'POST':
+        if request.form.get('investor', None) is not None:
+            form = InvestorForm(request.form)
+            found_investor = Investor.query.filter_by(name=form.investor.data).first()
+            if not found_investor in current_user.investors:
+                current_user.investors.append(found_investor)
+                db.session.add(found_investor)
+                db.session.commit()
+            else:
+                current_user.investors.remove(found_investor)
+                db.session.commit()
+            return redirect(url_for('users.agtech', page=page))
     return render_template('users/agtech.html', investors=investors, startups=startups)
+
+@users_blueprint.route('/agtech/<int:page>')
+def agt(page=1):
+    per_page = 20
+    investors = Investor.query.order_by('name').paginate(page,120,error_out=False)
+    startups = Startup.query.order_by('name').paginate(page,per_page,error_out=False)
+    return render_template('users/agtech.html',investors=investors, startups=startups)
