@@ -13,12 +13,12 @@
   <div class="row background-menu">
     <div class="col-lg-8 col-lg-offset-2">
       <ul class="markets-menu">
-        <li class="market"><a class="active" href="#all">All markets</a></li>
+        <li class="market"><a href="{{ url_for('root') }}">All markets</a></li>
         <li class="market"><a href="{{ url_for('users.foodtech')}}">Foodtech</a></li>
         <li class="market"><a href="{{ url_for('users.ai')}}">AI</a></li>
         <li class="market"><a href="{{ url_for('users.fashion')}}">Fashiontech</a></li>
         <li class="market"><a href="{{ url_for('users.biotech') }}">Biotech</a></li>
-        <li class="market"><a href="{{ url_for('users.fitnesstech') }}">Fitness</a></li>
+        <li class="market"><a class="active" href="{{ url_for('users.fitnesstech') }}">Fitness</a></li>
         <li class="market"><a href="{{ url_for('users.agtech') }}">Agtech</a></li>
       </ul>
     </div>
@@ -42,6 +42,7 @@
       <p class="title">INVESTORS</p>
       <ul class="list-group">
         {% for investor in investors %}
+          {% if 'fitness' in investor.get_market_names() %}
           <li class="list-group-item">
             <form class="investor" action="index.html" method="post">
               <p class="name">{{investor.name}}</p>
@@ -51,6 +52,7 @@
               <button type="submit" class="btn btn-success">Save</button>
             </form>
           </li>
+          {% endif %}
         {% endfor %}
       </ul>
     </div>

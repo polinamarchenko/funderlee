@@ -1,5 +1,7 @@
 from flask import redirect, render_template, request, url_for, Blueprint, flash
 from project.users.models import User
+from project.investors.models import Investor
+from project.startups.models import Startup
 from project.users.forms import UserForm, LoginForm, EditForm, PasswordForm
 from project.collections.forms import CollectionForm
 from project import db, bcrypt
@@ -115,3 +117,45 @@ def new(id):
     user = User.query.get(id)
     form = CollectionForm(request.form)
     return render_template('users/new.html', user=user, form=form)
+
+@users_blueprint.route('/foodtech')
+@login_required
+def foodtech():
+    investors = Investor.query.all()
+    startups = Startup.query.all()
+    return render_template('users/foodtech.html', investors=investors, startups=startups)
+
+@users_blueprint.route('/ai')
+@login_required
+def ai():
+    investors = Investor.query.all()
+    startups = Startup.query.all()
+    return render_template('users/ai.html', investors=investors, startups=startups)
+
+@users_blueprint.route('/fashiontech')
+@login_required
+def fashion():
+    investors = Investor.query.all()
+    startups = Startup.query.all()
+    return render_template('users/fashiontech.html', investors=investors, startups=startups)
+
+@users_blueprint.route('/biotech')
+@login_required
+def biotech():
+    investors = Investor.query.all()
+    startups = Startup.query.all()
+    return render_template('users/biotech.html', investors=investors, startups=startups)
+
+@users_blueprint.route('/fitnesstech')
+@login_required
+def fitnesstech():
+    investors = Investor.query.all()
+    startups = Startup.query.all()
+    return render_template('users/fitnesstech.html', investors=investors, startups=startups)
+
+@users_blueprint.route('/agtech')
+@login_required
+def agtech():
+    investors = Investor.query.all()
+    startups = Startup.query.all()
+    return render_template('users/agtech.html', investors=investors, startups=startups)
